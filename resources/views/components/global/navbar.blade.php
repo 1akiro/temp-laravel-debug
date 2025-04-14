@@ -1,3 +1,5 @@
+
+@vite('resources/css/app.css')
 <div>
-    <h1>Navbar</h1>
+    <h2 class="text-3xl text-red-500">Navbar</h2>
 </div>
