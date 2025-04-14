@@ -8,5 +8,6 @@
 <body>
 <x-global.navbar />
 <h1>Hello World!</h1>
+<x-global.footer />
 </body>
 </html>
