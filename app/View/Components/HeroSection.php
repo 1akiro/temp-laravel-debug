@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\Global;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Navbar extends Component
+class HeroSection extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class Navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.global.navbar');
+        return view('components.hero-section');
     }
 }

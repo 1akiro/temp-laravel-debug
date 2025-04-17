@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-@vite('resources/css/app.css')
-<title>Hello World Application</title>
-</head>
-<body>
-<x-global.navbar />
-<h1>Hello World!</h1>
-        <p>pargraph</p>
-<x-global.footer />
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @vite('resources/css/app.css')
+  </head>
+  <body>
+    <x-navbar />
+    <x-hero-section />
+    <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
+    <x-footer />
+  </body>
 </html>
