@@ -1,11 +1,48 @@
 @import 'tailwindcss';
 
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-primary-dark: #2A2A2A;
+    --color-primary-white: #FAFAFA;
+    --color-secondary-white: #E6E6E6;
+    --color-tertiary-white: #D9D9D9;
+
+    --color-accent-green: #2F4B35;
+    --color-accent-orange: #D97B46;
+
+    --spacing-ma1: 0.25rem;
+    --spacing-ma2: 0.5rem;
+    --spacing-ma3: 0.75rem;
+    --spacing-ma4: 1rem;
+    --spacing-ma5: 1.25rem;
+    --spacing-ma6: 1.75rem;
+    --spacing-li1: 2.5rem;
+    --spacing-li2: 3.75rem;
+    --spacing-li3: 6.25rem;
+    --spacing-li4: 10rem;
+    --spacing-li5: 15rem;
+
+    --text-ma1: 0.25rem;
+    --text-ma2: 0.5rem;
+    --text-ma3: 0.75rem;
+    --text-ma4: 1rem;
+    --text-ma5: 1.25rem;
+    --text-ma6: 1.75rem;
+    --text-li1: 2.5rem;
+    --text-li2: 3.75rem;
+    --text-li3: 6.25rem;
+    --text-li4: 10rem;
+    --text-li5: 15rem;
 }
