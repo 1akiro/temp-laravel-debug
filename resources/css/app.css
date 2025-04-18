@@ -14,13 +14,22 @@
     --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --color-primary-dark: #2A2A2A;
-    --color-primary-white: #FAFAFA;
-    --color-secondary-white: #E6E6E6;
-    --color-tertiary-white: #D9D9D9;
+    --color-dark: #2A2A2A;
+    --color-white: #FAFAFA;
+    --color-gray-100: #E6E6E6;
+    --color-gray-200: #D9D9D9;
 
-    --color-accent-green: #2F4B35;
-    --color-accent-orange: #D97B46;
+    --color-green-500: oklch(0.55 0.0515 150.23);
+    --color-green-600: oklch(0.44 0.0515 150.23);
+    --color-green-700: oklch(0.38 0.0505 150.23);
+    --color-green-800: oklch(0.27 0.0515 150.23);
+    --color-green-900: oklch(0.2 0.0515 150.23);
+    --color-green-950: oklch(0.12 0.0515 150.23);
+
+    --color-orange-400: oklch(0.68 0.1351 48.49);
+    --color-orange-500: oklch(0.55 0.1351 48.49);
+    --color-orange-600: oklch(0.44 0.1351 48.49);
+    --color-orange-700: oklch(0.38 0.1351 48.49);
 
     --spacing-ma1: 0.25rem;
     --spacing-ma2: 0.5rem;
