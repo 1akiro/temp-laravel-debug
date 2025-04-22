@@ -9,8 +9,10 @@
                         Mēs veidojam augstas kvalitātes 360° virtuālās tūres, kas ļauj iepazīt vidi attālināti – reālistiski un interaktīvi. Ideāli piemērots nekustamajiem īpašumiem, uzņēmumiem un publiskām telpām, kas vēlas izcelties digitālajā vidē.
             </p>
             <div class="flex justify-center lg:justify-start mt-6">
-              <button class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mr-ma2 border-b-4 border-green-800 hover:border-green-700 rounded-lg">Izpētīt Katalogu</button>
-              <button class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 ml-ma2 border-b-4 border-green-800 hover:border-green-700 rounded-xl">Sazinies ar mums</button>
+              <button class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mr-ma2 border-b-4 border-green-800 hover:border-green-700 rounded-xl">Izpētīt Katalogu</button>
+              <button class="bg-orange-500 hover:bg-orange-400 text-white
+font-bold py-2 px-4 ml-ma2 border-b-4 border-orange-600
+hover:border-orange-500 rounded-xl">Sazinies ar mums</button>
             </div>
           </div>
         </div>

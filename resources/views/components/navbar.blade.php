@@ -8,7 +8,11 @@
         <a class="" href="#">Kontakti</a>
     </div>
     <div class="space-x-ma6">
-        <a class="button" href="{{ route('show.register') }}">Reģistrēties</a>
-        <a class="button" href="{{ route('show.login')}}">Pieslēgties</a>
+        <a class="hover:bg-green-700 hover:text-white text-dark
+font-bold py-2 px-4 mr-ma2 border-2 border-green-700 hover:border-green-700
+rounded-xl" href="{{ route('show.register') }}">Reģistrēties</a>
+        <a class="hover:bg-green-700 hover:text-white text-dark
+font-bold py-2 px-4 mr-ma2 border-2 border-green-700 hover:border-green-700
+rounded-xl" href="{{ route('show.login')}}">Pieslēgties</a>
     </div>
 </nav>
