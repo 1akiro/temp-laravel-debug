@@ -1,13 +1,13 @@
 <x-layout>
 <div class="mt-li3 mb-li5 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form action="{{ route('register') }}" method="POST">
+    <form class="space-y-ma3" action="{{ route('register') }}" method="POST">
         @csrf
 
         <h2 class="text-center font-bold text-2xl">Reģistrēties</h2>
 
        <div>
            <label class="block text-sm/6 font-medium text-gray-900" for="name">Vārds Uzvārds</label>
-           <div class="mt-ma2">
+           <div class="mt-ma1">
             <input
                 class="block w-full rounded-md bg-white
                     px-3 py-1.5 text-base text-gray-900 outline-1
@@ -24,7 +24,7 @@
        </div>
        <div>
             <label class="block text-sm/6 font-medium text-gray-900" for="email">E-pasts</label>
-           <div class="mt-ma2">
+           <div class="mt-ma1">
             <input
                 class="block w-full rounded-md bg-white
                     px-3 py-1.5 text-base text-gray-900 outline-1
@@ -42,7 +42,7 @@
 
        <div>
             <label class="block text-sm/6 font-medium text-gray-900" for="password">Parole</label>
-           <div class="mt-ma2">
+           <div class="mt-ma1">
             <input
                 class="block w-full rounded-md bg-white
                     px-3 py-1.5 text-base text-gray-900 outline-1
@@ -59,7 +59,7 @@
 
        <div>
             <label class="block text-sm/6 font-medium text-gray-900" for="password_confirmation">Apstiprināt paroli</label>
-           <div class="mt-ma2">
+           <div class="mt-ma1">
             <input
                 class="block w-full rounded-md bg-white
                     px-3 py-1.5 text-base text-gray-900 outline-1

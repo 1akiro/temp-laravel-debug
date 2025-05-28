@@ -6,7 +6,7 @@
         <h2 class="text-center font-bold text-2xl">Pieslēgties</h2>
        <div>
             <label class="block text-sm/6 font-medium text-gray-900" for="email">E-pasts</label>
-            <div class="mt-ma2">
+            <div class="mt-ma1">
                 <input
                     class="block w-full rounded-md bg-white
                     px-3 py-1.5 text-base text-gray-900 outline-1
@@ -22,12 +22,12 @@
        </div>
         <div>
             <label for="password" class="block text-sm/6 font-medium text-gray-900">Parole</label>
-            <div class="mt-ma2">
+            <div class="mt-ma1">
                 <input
                     class="block w-full rounded-md bg-white
                     px-3 py-1.5 text-base text-gray-900 outline-1
                     -outline-offset-1 outline-gray-300 placeholder:text-gray-400
-                    focus:outline-2 focus:-outline-offset-2 focus:outline-green-700
+                    focus:outline-2 focus:-outline-offset-2 focus:outline-orange-500
                     sm:text-sm/6"
                     type="password"
                     name="password"
