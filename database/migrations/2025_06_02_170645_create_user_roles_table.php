@@ -13,12 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('slug')->unique();
-            $table->string('thumbnail')->nullable();
-            $table->string('tour_url');
-            $table->boolean('is_active')->default(true);
+            $table->string('role', 20);
             $table->timestamps();
         });
     }
