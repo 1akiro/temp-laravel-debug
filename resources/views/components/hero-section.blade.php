@@ -1,23 +1,35 @@
+
     <div class="mt-8">
-      <div class="flex flex-col lg:flex-row bg-white container mx-auto h-auto">
-        <div class="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2">
-          <div>
-            <h2 class="text-3xl font-semibold text-dark md:text-4xl">
-                        <span class="text-green-700">360&deg</span> Virtuālās Tūres
-            </h2>
-            <p class="mt-2 text-sm text-gray-600 md:text-base">
-                        Mēs veidojam augstas kvalitātes 360° virtuālās tūres, kas ļauj iepazīt vidi attālināti – reālistiski un interaktīvi. Ideāli piemērots nekustamajiem īpašumiem, uzņēmumiem un publiskām telpām, kas vēlas izcelties digitālajā vidē.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center lg:justify-start mt-ma5 gap-ma3">
-            <button class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 border-b-4 border-green-800 hover:border-green-700 rounded-lg">Izpētīt Katalogu</button>
-            <button class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 border-b-4 border-orange-600 hover:border-orange-500 rounded-lg mt-ma3 sm:mt-0">Sazinies ar mums</button>
-            </div>
-          </div>
-        </div>
-        <div class="w-full lg:w-1/2 mt-ma4 lg:mt-0">
-          <div class="h-full bg-contain" style="background-image: url('{{ asset('images/panorama.jpg') }}');">
-            <div class="h-full bg-black opacity-25"></div>
-          </div>
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col-reverse lg:flex-row items-center bg-gray-50 rounded-xl p-6 lg:p-12 shadow-md">
+
+      <div class="lg:w-1/2 w-full text-center lg:text-left">
+        <h2 class="text-4xl font-extrabold text-dark leading-tight">
+          <span class="text-green-700">360&deg;</span> Virtuālās Tūres
+        </h2>
+        <p class="mt-4 text-gray-700 text-base lg:text-lg">
+          Mēs veidojam augstas kvalitātes 360° virtuālās tūres, kas ļauj iepazīt vidi attālināti – reālistiski un interaktīvi.
+          Ideāli piemērots nekustamajiem īpašumiem, uzņēmumiem un publiskām telpām, kas vēlas izcelties digitālajā vidē.
+        </p>
+        <div class="flex flex-col sm:flex-row lg:justify-start justify-center gap-4 mt-6">
+          <a href="#"
+             class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md">
+            Izpētīt Katalogu
+          </a>
+          <a href="#"
+             class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-6 rounded-lg shadow-md">
+            Sazinies ar mums
+          </a>
         </div>
       </div>
+
+      <div class="lg:w-1/2 w-full mb-6 lg:mb-0 flex justify-center">
+        <img src="{{ asset('images/panorama.jpg') }}"
+             alt="Virtuālā tūre"
+             class="rounded-2xl shadow-lg w-full h-auto max-w-xl object-cover">
+      </div>
+
     </div>
+  </div>
+</div>
+
