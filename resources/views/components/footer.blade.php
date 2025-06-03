@@ -1,7 +1,7 @@
 <div>
 <footer class=" mt-8 bg-[#FAFAFA] text-[#2A2A2A] pt-8 pb-6 border-t border-[#D9D9D9]">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-ma6 text-sm mb-li2">
 
             <div>
                 <h5 class="font-serif text-lg font-semibold mb-2">Virtuālās tūres</h5>
