@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tour;
+use ZipArchive;
 
 class ToursController extends Controller
 {
@@ -21,7 +21,7 @@ class ToursController extends Controller
      */
     public function create()
     {
-        //
+        return view('tours.create');
     }
 
     /**
@@ -29,15 +29,90 @@ class ToursController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'thumbnail' => 'required|image|max:2048',
+            'zip' => 'required|file|mimes:zip|max:500240'
+        ]);
+
+        $slug = Str::slug($request->title);
+        $zip = new ZipArchive;
+        $zipPath = $request->file('zip')->getRealPath();
+        $extractTo = public_path("tours/{$slug}");
+
+        if (!file_exists($extractTo)) {
+            mkdir($extractTo, 0755, true);
+        }
+
+        if ($zip->open($zipPath) === true) {
+            $firstFile = $zip->getNameIndex(0);
+            $topLevelFolder = explode('/', $firstFile)[0] ?? '';
+
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $entry = $zip->getNameIndex($i);
+
+                if (str_starts_with($entry, $topLevelFolder . '/')) {
+                    // Remove top-level folder
+                    $relativePath = substr($entry, strlen($topLevelFolder) + 1);
+                } else {
+                    $relativePath = $entry;
+                }
+
+                if (!$relativePath) {
+                    continue;
+                }
+
+                $fullPath = $extractTo . '/' . $relativePath;
+
+                if (str_ends_with($entry, '/')) {
+                    // Directory
+                    if (!is_dir($fullPath)) {
+                        mkdir($fullPath, 0755, true);
+                    }
+                } else {
+                    // File
+                    $dir = dirname($fullPath);
+                    if (!is_dir($dir)) {
+                        mkdir($dir, 0755, true);
+                    }
+                    $stream = $zip->getStream($entry);
+                    file_put_contents($fullPath, stream_get_contents($stream));
+                    fclose($stream);
+                }
+            }
+
+            $zip->close();
+        } else {
+            return back()->withErrors(['zip' => 'Unable to open ZIP file.']);
+        }
+
+        // Save thumbnail
+        $thumbnailUrl = null;
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store("tours/{$slug}", 'public');
+            $thumbnailUrl = "/storage/{$path}";
+        }
+
+        // Save record
+        Tour::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'slug' => $slug,
+            'thumbnail' => $thumbnailUrl,
+            'tour_url' => "/tours/{$slug}/index.htm",
+        ]);
+        return redirect()->route('tour.index')->with('success', 'Tour uploaded.');
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $tour = Tour::findOrFail($id);
+        return view('tours.show', compact('tour'));
     }
 
     /**

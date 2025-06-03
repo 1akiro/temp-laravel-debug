@@ -1,4 +1,7 @@
 <x-layout>
+    <x-slot name="title">
+        Reģistrēties
+    </x-slot>
 <div class="mt-li3 mb-li5 sm:mx-auto sm:w-full sm:max-w-sm">
     <form class="space-y-ma3" action="{{ route('register') }}" method="POST">
         @csrf
