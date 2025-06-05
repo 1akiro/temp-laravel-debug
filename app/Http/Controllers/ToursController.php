@@ -120,7 +120,8 @@ class ToursController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tour = Tour::findOrFail($id);
+        return view('tours.edit', compact('tour'));
     }
 
     /**
@@ -128,7 +129,9 @@ class ToursController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $tour = Tour::findOrFail($id);
+        return redirect()->route('tours.show', $tour>id)->with('success', 'Tour updated
+            successfully!');
     }
 
     /**
@@ -136,6 +139,8 @@ class ToursController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $tour = Tour::findOrFail($id);
+        $tour>delete();
+        return redirect()->route('tour.index')->with('success', 'Tour deleted successfully');
     }
 }
