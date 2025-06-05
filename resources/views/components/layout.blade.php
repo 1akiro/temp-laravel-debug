@@ -7,8 +7,10 @@
         <title>{{ $title }}</title>
     </head>
     <body>
-        <x-navbar />
-        <x-admin-navbar />
+        <div class="top-0 z-[20]">
+            <x-navbar />
+            <x-admin-navbar />
+        </div>
         <main class="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {{ $slot }}
         </main>

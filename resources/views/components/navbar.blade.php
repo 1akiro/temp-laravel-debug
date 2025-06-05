@@ -1,4 +1,4 @@
-<nav class="bg-white sticky top-0 z-[20] w-full px-ma4 lg:px-li4 py-ma5">
+<nav class="bg-white w-full px-ma4 lg:px-li4 py-ma5">
     <!-- Desktop Navbar -->
     <div class="hidden lg:flex justify-between items-center w-full">
         <div class="text-green-700 text-ma6 font-bold">
@@ -10,7 +10,6 @@
             <a href="#">Kontakti</a>
         </div>
         <div class="flex space-x-ma3">
-            <a class="hover:bg-green-700 hover:text-white text-dark font-bold py-2 px-4 border-2 border-green-700 hover:border-green-700 rounded-xl text-center min-w-[9rem]" href="{{ route('show.register') }}">Reģistrēties</a>
             <a class="hover:bg-green-700 hover:text-white text-dark font-bold py-2 px-4 border-2 border-green-700 hover:border-green-700 rounded-xl text-center min-w-[9rem]" href="{{ route('show.login') }}">Pieslēgties</a>
         </div>
     </div>
@@ -29,7 +28,8 @@
             <a href="{{ route('home') }}">Sākumlapa</a>
             <a href="{{ route('tour.index')}}">Katalogs</a>
             <a href="#">Kontakti</a>
-            <a class="hover:bg-green-700 hover:text-white text-dark font-bold py-2 px-4 border-2 border-green-700 hover:border-green-700 rounded-xl min-w-[10rem] text-left" href="{{ route('show.register') }}">Reģistrēties</a>
+            <a href="{{ route('dashboard') }}">Informācijas panelis</a>
+            <a href="{{ route('tour.create') }}">Pievienot tūri</a>
             <a class="hover:bg-green-700 hover:text-white text-dark font-bold py-2 px-4 border-2 border-green-700 hover:border-green-700 rounded-xl min-w-[10rem] text-left" href="{{ route('show.login') }}">Pieslēgties</a>
         </div>
     </div>
