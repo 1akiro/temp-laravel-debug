@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tour;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Listing;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -16,13 +20,50 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-     public function register ()
+    public function register (Request $request)
     {
-        return view('auth.register');
+        $request->validate([
+            'name' => 'required',
+            'email' =>'required|email|unique:users,email',
+            'password' => 'required|confirmed'
+
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email'=> $request->email,
+            'password' => $request->password
+        ]);
+
+        Auth::login($user);
+        return redirect()->route('tour.index')->with('success', 'Account created successfuly!');
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        return view('auth.login');
+        $user = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($user)) {
+
+            $request->session()->regenerate();
+
+            return redirect()->route('tour.index');
+        }
+        return back()->withErrors([
+
+            'email' => 'The provided credentials do not match our records.',
+
+        ])->onlyInput('email');
+    }
+    public function logout(Request $request) {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('tour.index')->with('success', 'Logged out!');
     }
 }
