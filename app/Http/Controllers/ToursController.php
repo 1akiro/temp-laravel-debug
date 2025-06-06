@@ -140,7 +140,7 @@ class ToursController extends Controller
     public function destroy(string $id)
     {
         $tour = Tour::findOrFail($id);
-        $tour>delete();
+        $tour->delete();
         return redirect()->route('tour.index')->with('success', 'Tour deleted successfully');
     }
 }
