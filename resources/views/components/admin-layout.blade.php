@@ -7,7 +7,7 @@
         <title>{{ $title }}</title>
     </head>
     <body>
-        <x-sidebar />
+        <x-sidebar/>
         <main class="w-full md:w-[calc(100%-256px)] md:ml-64 min-h-screen transition-all main">
             <div class="top-0 z-[20]">
                 <nav class="bg-white px-ma4 w-full py-ma5">

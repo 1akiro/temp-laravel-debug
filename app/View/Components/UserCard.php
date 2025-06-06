@@ -6,14 +6,15 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Navbar extends Component
+class UserCard extends Component
 {
     public $user;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($user)
     {
+        $this->user = $user;
     }
 
     /**
@@ -21,6 +22,6 @@ class Navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navbar');
+        return view('components.user-card');
     }
 }
