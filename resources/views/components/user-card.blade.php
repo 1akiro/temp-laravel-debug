@@ -2,7 +2,7 @@
     <div class="w-1/12 font-medium">#{{ $user->id }}</div>
     <div class="w-4/12">{{ $user->name }}</div>
     <div class="w-4/12">{{ $user->email }}</div>
-    <div class="w-4/12">role</div>
+    <div class="w-4/12">{{ $user->role->role }}</div>
     <div class="w-4/12">Edit</div>
     <div class="w-4/12 text-right text-gray-600">
         {{ $user->created_at->format('Y-m-d H:i') }}
