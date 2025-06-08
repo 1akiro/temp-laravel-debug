@@ -5,7 +5,7 @@
     <form class="space-y-ma3" action="{{ route('tour.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <h2 class="font-bold text-2xl">Pievienot tūri</h2>
+        <h2 class="font-bold text-2xl">Rediģēt {{ $tour->title }}</h2>
         <div>
             <label class="block text-sm/6 font-medium text-gray-900" for="name">Tūres nosaukums</label>
             <div class="mt-ma1">
@@ -20,6 +20,22 @@
                     name="title"
                     required
                     value="{{ old('title') }}"
+                />
+            </div>
+        </div>
+        <div>
+            <label class="block text-sm/6 font-medium text-gray-900" for="name">Uzņēmuma nosaukums</label>
+            <div class="mt-ma1">
+                <input
+                    class="block w-full rounded-md bg-white
+                    px-3 py-1.5 text-base text-gray-900 outline-1
+                    -outline-offset-1 outline-gray-300 placeholder:text-gray-400
+                    focus:outline-2 focus:-outline-offset-2 focus:outline-orange-500
+                    sm:text-sm/6"
+
+                    type="text"
+                    name="company_name"
+                    value="{{ old('company_name') }}"
                 />
             </div>
         </div>

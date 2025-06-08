@@ -4,7 +4,7 @@
     </x-slot>
     <div class="w-full aspect-video rounded-xl shadow-lg overflow-hidden border border-gray-100">
         <iframe
-            src="{{ $tour->tour_url }}"
+            src="{{ Storage::url($tour->tour_url) }}"
             frameborder="0"
             allowfullscreen
             class="w-full h-full"

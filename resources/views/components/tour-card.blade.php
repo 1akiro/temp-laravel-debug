@@ -1,6 +1,6 @@
 
 <div class="max-w-sm mx-auto bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:bg-gray-100">
-    <img class="w-full h-48 object-cover" src="{{ $tour->thumbnail }}" alt="{{ $tour->title }}">
+    <img class="w-full h-48 object-cover" src="{{ Storage::url($tour->thumbnail) }}" alt="{{ $tour->title }}">
 
     <div class="p-4">
         <h2 class="text-xl font-semibold text-gray-800">{{ $tour->title }}</h2>
