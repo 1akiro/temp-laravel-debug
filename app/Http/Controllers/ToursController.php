@@ -158,8 +158,9 @@ class ToursController extends Controller
      */
     public function destroy(Tour $tour)
     {
-        Storage::deleteDirectory("tours/{$tour->slug}");
-        Storage::deleteDirectory("thumbnail/{$tour->slug}");
+
+        Storage::disk('public')->deleteDirectory("tours/{$tour->slug}");
+        Storage::disk('public')->deleteDirectory("thumbnail/{$tour->slug}");
         $tour->delete();
         return redirect()->route('tour.index')->with('success', 'Tour deleted successfully');
     }
