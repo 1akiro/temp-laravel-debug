@@ -18,10 +18,13 @@
             </form>
 
             @else
+            <a class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md"
+                href="{{ route('show.register') }}">Reģistrēties</a>
             <a class="hover:bg-green-700 hover:text-white
                 text-dark font-bold py-2 px-4 border-2
                 border-green-700 hover:border-green-700
                 rounded-xl min-w-[10rem] text-center" href="{{ route('show.login') }}">Pieslēgties</a>
+
             @endauth
         </div>
     </div>
