@@ -4,17 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use App\Models\Tour;
 class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $query = $request->input('query');
+    
+        if ($query) {
+            $users = User::where('email', 'like', "%{$query}%")
+                ->orWhere('name', 'like', "%{$query}%")
+                ->get();
+        } else {
+            $users = User::all();
+        }
         return view('user.index', compact('users'));
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -35,10 +43,24 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
         $user = User::findOrFail($id);
-        return view('user.show', compact('user'));
+        $query = $request->input('query');
+    
+        $tourQuery = Tour::where('user_id', $user->id);
+
+        if ($query) {
+            $tourQuery->where(function($q) use ($query) {
+                $q->where('title', 'like', "%{$query}%")
+                  ->orWhere('description', 'like', "%{$query}%")
+                  ->orWhere('company_name', 'like', "%{$query}%");
+            });
+        }
+
+        $tours = $tourQuery->get();
+
+        return view('user.show', compact('user', 'tours'));
     }
 
     /**
@@ -63,5 +85,22 @@ class UsersController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        if (strlen($query) < 2) {
+            return response()->json([]);
+        }
+
+        $users = User::where('email', 'like', "%{$query}%")
+            ->orWhere('name', 'like', "%{$query}%")
+            ->select('id', 'name', 'email')
+            ->limit(5)
+            ->get();
+
+        return response()->json($users);
     }
 }

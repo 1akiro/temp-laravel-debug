@@ -28,18 +28,4 @@ Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashb
 
 Route::resource('user', UsersController::class);
 
-Route::get('/api/users/search', function (Request $request) {
-    $query = $request->input('query');
-
-    if (strlen($query) < 2) {
-        return response()->json([]);
-    }
-
-    $users = User::where('email', 'like', "%{$query}%")
-        ->orWhere('name', 'like', "%{$query}%")
-        ->select('id', 'name', 'email')
-        ->limit(5)
-        ->get();
-
-    return response()->json($users);
-})->name('users.search');
+Route::get('/api/users/search', [UsersController::class, 'search'])->name('users.search');
