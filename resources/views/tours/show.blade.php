@@ -63,6 +63,8 @@
                     sm:text-sm/6"
                     value="{{ old('assign_owner') }}"
                 >
+                <div id="email-suggestions" class="absolute z-10 mt-li1 bg-white border border-gray-200 rounded-md shadow-lg hidden max-h-48 overflow-y-auto">
+                </div>
                 <button id="assign_owner_button" type="button"
                     class="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold
                     py-ma2 px-ma4 mr-ma2  border-orange-600 hover:border-orange-700 rounded-xl">
@@ -77,41 +79,99 @@
     </div>
 </x-layout>
 <script>
-document.getElementById('assign_owner_button').addEventListener('click', function(event) {
-    event.preventDefault();
-    console.log('Button found:', document.getElementById('assign_owner_button'))
-    let email = document.getElementById('assign_owner').value;
-    let status = document.getElementById('owner-change-status');
-    status.textContent = '';
+document.addEventListener('DOMContentLoaded', function() {
+    const emailInput = document.getElementById('assign_owner');
+    const suggestionsContainer = document.getElementById('email-suggestions');
+    let debounceTimer;
 
-    fetch("{{ route('tour.changeOwner', $tour) }}", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({email: email})
-    })
-        .then(async r => {
-            let data;
-            try {
-                data = await r.json();
-            } catch(e) {
-                throw new Error("Invalid server response");
-            }
-            if (!r.ok) {
-                throw new Error(data.error || "Server error");
-            }
-            return data;
+    emailInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        const query = this.value.trim();
+
+        if (query.length < 2) {
+            suggestionsContainer.classList.add('hidden');
+            suggestionsContainer.innerHTML = '';
+            return;
+        }
+
+        debounceTimer = setTimeout(() => {
+            fetch(`/api/users/search?query=${encodeURIComponent(query)}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    suggestionsContainer.innerHTML = '';
+
+                    if (data.length === 0) {
+                        suggestionsContainer.classList.add('hidden');
+                        return;
+                    }
+
+                    data.forEach(user => {
+                        const suggestion = document.createElement('div');
+                        suggestion.className = 'px-4 py-2 cursor-pointer hover:bg-gray-100';
+                        suggestion.textContent = `${user.name} (${user.email})`;
+                        suggestion.addEventListener('click', () => {
+                            emailInput.value = user.email;
+                            suggestionsContainer.classList.add('hidden');
+                        });
+                        suggestionsContainer.appendChild(suggestion);
+                    });
+
+                    suggestionsContainer.classList.remove('hidden');
+                })
+                .catch(error => {
+                    console.error('Error fetching email suggestions:', error);
+                });
+        }, 300);
+    });
+
+    document.addEventListener('click', function(event) {
+        if (!emailInput.contains(event.target) && !suggestionsContainer.contains(event.target)) {
+            suggestionsContainer.classList.add('hidden');
+        }
+    });
+
+    document.getElementById('assign_owner_button').addEventListener('click', function(event) {
+        event.preventDefault();
+        let email = document.getElementById('assign_owner').value;
+        let status = document.getElementById('owner-change-status');
+        status.textContent = '';
+
+        fetch("{{ route('tour.changeOwner', $tour) }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({email: email})
         })
-        .then(data => {
-            status.textContent = `✅ Īpašnieks nomainīts uz ${data.new_owner.name} (${data.new_owner.email})`;
-            status.className = "text-green-600 text-sm";
-        })
-        .catch(err => {
-            status.textContent = "❌ " + err.message;
-            status.className = "text-red-600 text-sm";
-        });
+            .then(async r => {
+                let data;
+                try {
+                    data = await r.json();
+                } catch(e) {
+                    throw new Error("Invalid server response");
+                }
+                if (!r.ok) {
+                    throw new Error(data.error || "Server error");
+                }
+                return data;
+            })
+            .then(data => {
+                status.textContent = `Īpašnieks nomainīts uz ${data.new_owner.name} (${data.new_owner.email})`;
+                status.className = "text-green-700 text-sm";
+            })
+            .catch(err => {
+                status.textContent = err.message;
+                status.className = "text-red-600 text-sm";
+            });
+    });
 });
 </script>
 

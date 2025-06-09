@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminController;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('home');
@@ -25,3 +27,19 @@ Route::post('/tours/{tour}/change-owner', [ToursController::class, 'changeOwner'
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashboard');
 
 Route::resource('user', UsersController::class);
+
+Route::get('/api/users/search', function (Request $request) {
+    $query = $request->input('query');
+
+    if (strlen($query) < 2) {
+        return response()->json([]);
+    }
+
+    $users = User::where('email', 'like', "%{$query}%")
+        ->orWhere('name', 'like', "%{$query}%")
+        ->select('id', 'name', 'email')
+        ->limit(5)
+        ->get();
+
+    return response()->json($users);
+})->name('users.search');
