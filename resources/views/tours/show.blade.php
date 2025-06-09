@@ -22,15 +22,15 @@
     <div class="my-ma5">
         <h1 class="mb-ma1 text-ma5 font-semibold">{{ $tour->title }}</h1>
         <div class="flex space-x-ma5">
-        <h5 class="text-gray-500 font-semibold">{{ $tour->company_name }}</h5>
-        <a href="{{ route('user.show', $tour->user) }}">Publicēja: <strong class="text-dark">{{ $tour->user->name ?? 'Unknown'}}<strong/></a>
+            <h5 class="text-gray-500 font-semibold">{{ $tour->company_name }}</h5>
+            <a href="{{ route('user.show', $tour->user) }}">Publicēja: <strong class="text-dark">{{ $tour->user->name ?? 'Unknown'}}<strong/></a>
         </div>
         <p class="">{{ $tour->description }}</p>
     </div>
-    <div class="flex flex-wrap items-center gap-4 bg-gray-100 rounded-lg p-4 mb-4 border border-gray-200">
+    <div class="flex flex-wrap items-center gap-ma3 bg-gray-100 rounded-lg p-4 mb-4 border border-gray-200">
         <a href="{{ route('tour.edit', $tour->id)}}" class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mr-ma2  border-green-800 hover:border-green-700 rounded-xl">Rediģēt</a>
         <form action="{{ route('tour.destroy', $tour) }}" method="POST" onsubmit="return
-            confirm('Are you sure you want to delete this tour?');">
+        confirm('Are you sure you want to delete this tour?');">
             @csrf
             @method('DELETE')
             <button type="submit" class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-4 mr-ma2  border-orange-600 hover:border-orange-700 rounded-xl">Delete</button>
@@ -49,5 +49,70 @@
                 </span>
             </label>
         </form>
+        <div class="mb-4">
+            <label for="assign_email" class="block text-sm/6 font-medium text-gray-900">Mainīt tūres autoru (meklēt pēc epasta):</label>
+            <div class="flex space-x-ma3">
+                <input
+                    type="email"
+                    name="assign_owner"
+                    id="assign_owner"
+                    class="block w-full rounded-md bg-white
+                    px-ma3 py-ma1 text-base text-gray-900 outline-1
+                    -outline-offset-1 outline-gray-300 placeholder:text-gray-400
+                    focus:outline-2 focus:-outline-offset-2 focus:outline-orange-500
+                    sm:text-sm/6"
+                    value="{{ old('assign_owner') }}"
+                >
+                <button id="assign_owner_button" type="button"
+                    class="w-full bg-orange-500 hover:bg-orange-400 text-white font-bold
+                    py-ma2 px-ma4 mr-ma2  border-orange-600 hover:border-orange-700 rounded-xl">
+                    Mainīt īpašnieku
+                </button>
+            </div>
+            <span id="owner-change-status" class="text-sm"></span>
+            @error('assign_owner')
+            <div class="text-red-500 text-xs mt-1">{{ $message }}</div>
+            @enderror
+        </div>
     </div>
 </x-layout>
+<script>
+document.getElementById('assign_owner_button').addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log('Button found:', document.getElementById('assign_owner_button'))
+    let email = document.getElementById('assign_owner').value;
+    let status = document.getElementById('owner-change-status');
+    status.textContent = '';
+
+    fetch("{{ route('tour.changeOwner', $tour) }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({email: email})
+    })
+        .then(async r => {
+            let data;
+            try {
+                data = await r.json();
+            } catch(e) {
+                throw new Error("Invalid server response");
+            }
+            if (!r.ok) {
+                throw new Error(data.error || "Server error");
+            }
+            return data;
+        })
+        .then(data => {
+            status.textContent = `✅ Īpašnieks nomainīts uz ${data.new_owner.name} (${data.new_owner.email})`;
+            status.className = "text-green-600 text-sm";
+        })
+        .catch(err => {
+            status.textContent = "❌ " + err.message;
+            status.className = "text-red-600 text-sm";
+        });
+});
+</script>
+
+

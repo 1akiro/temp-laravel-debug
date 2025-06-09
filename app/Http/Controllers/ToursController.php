@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tour;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -171,5 +172,23 @@ class ToursController extends Controller
         $tour->save();
 
         return redirect()->route('tour.show', $tour)->with('success', 'Tour visibility updated.');
+    }
+    public function changeOwner(Request $request, Tour $tour)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ]);
+
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        $tour->user_id = $user->id;
+        $tour->save();
+
+        return response()->json([
+            'new_owner' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        ]);
     }
 }

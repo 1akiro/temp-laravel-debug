@@ -19,6 +19,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::resource('tour', ToursController::class);
 Route::patch('/tours/{tour}/visibility', [ToursController::class, 'toggleVisibility'])->name('tour.visibility');
+Route::post('/tours/{tour}/change-owner', [ToursController::class, 'changeOwner'])
+    ->name('tour.changeOwner');
 
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashboard');
 
