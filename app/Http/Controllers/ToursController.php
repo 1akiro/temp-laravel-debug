@@ -81,7 +81,7 @@ class ToursController extends Controller
      */
     public function show(string $id)
     {
-        $tour = Tour::findOrFail($id);
+        $tour = Tour::with('user')->findOrFail($id);
         return view('tours.show', compact('tour'));
     }
 
@@ -163,5 +163,13 @@ class ToursController extends Controller
         Storage::disk('public')->deleteDirectory("thumbnail/{$tour->slug}");
         $tour->delete();
         return redirect()->route('tour.index')->with('success', 'Tour deleted successfully');
+    }
+
+    public function toggleVisibility(Request $request, Tour $tour)
+    {
+        $tour->is_active = $request->has('is_active');
+        $tour->save();
+
+        return redirect()->route('tour.show', $tour)->with('success', 'Tour visibility updated.');
     }
 }
