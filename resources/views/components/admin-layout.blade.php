@@ -16,10 +16,20 @@
                         <div class="text-green-700 text-ma5 font-bold">
                             Virtuālās tūres
                         </div>
-                        <div class="justify-self-start flex space-x-ma5 text-ma4 font-semibold text-dark">
+                        <div class="flex space-x-ma5 text-ma4 font-semibold text-dark">
                             <a href="{{ route('home') }}">Sākumlapa</a>
                             <a href="{{ route('tour.index')}}">Katalogs</a>
                             <a href="#">Kontakti</a>
+                        </div>
+                        <div class="flex space-x-ma3">
+                            @auth
+                            <a href="{{ route('user.show', $user) }}">
+                                <strong>{{ $user->name ?? $user->username ?? $user->email }}</strong></a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="text-green-700">Atslēgties</button>
+                            </form>
+                            @endauth
                         </div>
                     </div>
 
