@@ -99,6 +99,7 @@ class UsersController extends Controller
                 Rule::unique('users')->ignore($user->id)
             ],
             'role_id' => 'required|exists:user_roles,id',
+            'locale' => 'nullable|in:en,lv',
         ];
 
         if ($request->filled('password')) {
@@ -111,6 +112,7 @@ class UsersController extends Controller
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->role_id = $validated['role_id'];
+        $user->locale = $validated['locale'] ?? 'lv';
 
         if ($request->filled('password')) {
             $user->password = Hash::make($validated['password']);

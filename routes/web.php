@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ToursController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LangController;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -49,3 +50,5 @@ Route::get('/logs', [AdminController::class, 'activities'])
 Route::get('/api/users/search', [UsersController::class, 'search'])
     ->name('users.search')
     ->middleware('auth');
+
+Route::get('language/{locale}', [LangController::class, 'switchLang'])->name('language.switch');
