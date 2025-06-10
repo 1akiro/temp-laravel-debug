@@ -46,16 +46,41 @@
             @csrf
             @method('PATCH')
             <label class="flex items-center cursor-pointer">
-                <div class="relative">
-                    <input type="checkbox" name="is_active" onchange="this.form.submit()" {{ $tour->is_active ? 'checked' : '' }} class="sr-only peer">
-                    <div class="w-11 h-6 bg-gray-200 rounded-full peer-focus:outline-none peer-checked:bg-green-700 transition"></div>
-                    <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition peer-checked:translate-x-full"></div>
-                </div>
-                <span class="ml-3 text-sm font-medium text-gray-900">
-                    {{ $tour->is_active ? 'Visible' : 'Hidden' }}
-                </span>
+            <div class="relative">
+                <input type="checkbox" name="is_active" onchange="this.form.submit()" {{ $tour->is_active ? 'checked' : '' }} class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 rounded-full peer-focus:outline-none peer-checked:bg-green-700 transition"></div>
+                <div class="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition peer-checked:translate-x-full"></div>
+            </div>
+            <span class="ml-3 text-sm font-medium text-gray-900">
+                {{ $tour->is_active ? 'Visible' : 'Hidden' }}
+            </span>
             </label>
         </form>
+        <button
+            type="button"
+            id="get-embed-code"
+            class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mr-ma2  border-green-800 hover:border-green-700 rounded-xl"
+        >
+            Iegūt pirmkodu
+        </button>
+        <div id="embed-code-modal" class="fixed inset-0 bg-opacity-40 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-lg shadow-lg p-ma5 w-full max-w-lg relative">
+            <button id="close-embed-modal" class="absolute top-ma3 right-ma5 text-green-700 hover:text-green-500 text-2xl">&times;</button>
+            <h2 class="text-lg font-semibold mb-4">Ievieto šo tūri savā mājaslapā</h2>
+            <label class="block mb-2 text-sm text-green-600">Kopē pirmkodu:</label>
+            <textarea
+                readonly
+                class="w-full mb-ma3 p-ma3 border rounded bg-gray-100 font-mono text-xs"
+                rows="4"
+                id="embed-code-text"
+            ><iframe src="http://localhost:8000{{ Storage::url($tour->tour_url) }}" frameborder="0" allowfullscreen style="width:100%;height:500px;border-radius:12px;border:1px solid #eee;"></iframe></textarea>
+            <button
+                id="copy-embed-code"
+                class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mr-ma2  border-green-800 hover:border-green-700 rounded-xl"
+            >Kopēt</button>
+            <span id="embed-copy-status" class="ml-3 text-sm"></span>
+            </div>
+        </div>
         <div class="mb-4">
             <label for="assign_email" class="block text-sm/6 font-medium text-gray-900">Mainīt tūres autoru (meklēt pēc epasta):</label>
             <div class="flex space-x-ma3">
@@ -87,9 +112,47 @@
 </x-layout>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const embedBtn = document.getElementById('get-embed-code');
+    const embedModal = document.getElementById('embed-code-modal');
+    const closeModal = document.getElementById('close-embed-modal');
+    const copyBtn = document.getElementById('copy-embed-code');
+    const embedTextarea = document.getElementById('embed-code-text');
+    const copyStatus = document.getElementById('embed-copy-status');
+
     const emailInput = document.getElementById('assign_owner');
     const suggestionsContainer = document.getElementById('email-suggestions');
     let debounceTimer;
+
+
+            embedBtn.addEventListener('click', function() {
+            embedModal.classList.remove('hidden');
+            embedTextarea.select();
+            });
+
+            closeModal.addEventListener('click', function() {
+            embedModal.classList.add('hidden');
+            copyStatus.textContent = '';
+            });
+
+            copyBtn.addEventListener('click', function() {
+            embedTextarea.select();
+            try {
+                document.execCommand('copy');
+                copyStatus.textContent = 'Copied!';
+                copyStatus.className = 'ml-3 text-green-700 text-sm';
+            } catch (e) {
+                copyStatus.textContent = 'Failed to copy';
+                copyStatus.className = 'ml-3 text-red-600 text-sm';
+            }
+            });
+
+            // Close modal when clicking outside the modal content
+            embedModal.addEventListener('click', function(e) {
+            if (e.target === embedModal) {
+                embedModal.classList.add('hidden');
+                copyStatus.textContent = '';
+            }
+            });
 
     emailInput.addEventListener('input', function() {
         clearTimeout(debounceTimer);
@@ -179,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 status.className = "text-red-600 text-sm";
             });
     });
+    
 });
 </script>
 
