@@ -8,7 +8,12 @@
             <div class="w-1/3">
                 <h2 class="text-2xl font-bold">{{ $user->name }} Profile</h2>
             </div>
-            <div class="w-2/3">
+            <div class="w-2/3 flex justify-end space-x-ma3">
+                <div class="flex justify-end">
+                    <a href="{{ route('user.edit', $user->id) }}" class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-xl shadow-md">
+                        Rediģēt profilu
+                    </a>
+                </div>
                 <div class="flex justify-end">
                     <a href="{{ url()->previous() }}" class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-xl shadow-md">
                         Atpakaļ

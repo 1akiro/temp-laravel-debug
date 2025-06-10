@@ -5,7 +5,8 @@
     </div>
     <div class="w-4/12">{{ $user->email }}</div>
     <div class="w-4/12">{{ $user->role->role }}</div>
-    <div class="w-4/12">Edit</div>
+    <div class="w-4/12">
+        <a href="{{ route('user.edit', $user->id) }}">Edit</a></div>
     <div class="w-4/12 text-right text-gray-600">
         {{ $user->created_at->format('Y-m-d H:i') }}
     </div>

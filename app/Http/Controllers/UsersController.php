@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Tour;
+use App\Models\UserRole;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+
 class UsersController extends Controller
 {
     /**
@@ -68,7 +73,10 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id); 
+        $roles = UserRole::all();
+        
+        return view('user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -76,7 +84,36 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($user->id)
+            ],
+            'role_id' => 'required|exists:user_roles,id',
+        ];
+        
+        if ($request->filled('password')) {
+            $rules['password'] = 'required|min:6|confirmed';
+        }
+    
+        
+        $validated = $request->validate($rules);
+        
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role_id = $validated['role_id'];
+        
+        if ($request->filled('password')) {
+            $user->password = Hash::make($validated['password']);
+        }
+        
+        $user->save();
+        
+        return redirect()->route('user.show', $user)->with('success', 'Lietotāja profils atjaunināts veiksmīgi.');
     }
 
     /**
@@ -84,7 +121,16 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);        
+        $tours = Tour::where('user_id', $user->id)->get();
+        foreach ($tours as $tour) {
+            $tour->user_id = Auth::id();
+            $tour->save();
+        }
+        
+        $user->delete();
+        
+        return redirect()->route('user.index')->with('success', 'Lietotājs dzēsts veiksmīgi.');
     }
 
     public function search(Request $request)
