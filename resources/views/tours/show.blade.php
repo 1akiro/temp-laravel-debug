@@ -86,7 +86,7 @@
             </span>
             </label>
         </form>
-        @can('before')
+        @can('before', $tour)
         <div class="mb-4">
             <label for="assign_email" class="block text-sm/6 font-medium text-gray-900">Mainīt tūres autoru (meklēt pēc epasta):</label>
             <div class="flex space-x-ma3">
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 status.className = "text-red-600 text-sm";
             });
     });
-    
+
 });
 </script>
 

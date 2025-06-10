@@ -5,15 +5,18 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Auth;
+
 
 class Layout extends Component
 {
+    public $user;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->user = Auth::user();
     }
 
     /**
