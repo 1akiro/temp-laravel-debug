@@ -22,3 +22,7 @@ Route::resource('tour', ToursController::class);
 Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashboard');
 
 Route::resource('user', UsersController::class);
+
+Route::get('/logs', [AdminController::class, 'activities'])->name('admin.activities');
+
+
