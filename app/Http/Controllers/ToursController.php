@@ -8,9 +8,15 @@ use App\Models\TourView;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
+use Illuminate\Routing\Controller;
 
 class ToursController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -121,29 +127,29 @@ class ToursController extends Controller
         if ($request->has('title') && $request->title !== $tour->title) {
             $old_slug = $tour->slug;
             $new_slug = Str::slug($request->title);
-            
+
             // atjaunina glabāšanas ceļu
-            
+
             $storage_path = "public/tours/{$old_slug}";
             $new_storage_path = "public/tours/{$new_slug}";
-            
+
             if (Storage::exists($storage_path)) {
                 Storage::move($storage_path, $new_storage_path);
             }
-            
+
             // Atjaunina sīktēla faila ceļu
             if ($tour->thumbnail) {
                 $new_thumbnail = str_replace("thumbnail/{$old_slug}", "thumbnail/{$new_slug}", $tour->thumbnail);
                 $old_thumbnail_path = "public/" . $tour->thumbnail;
                 $new_thumbnail_path = "public/" . $new_thumbnail;
-                
+
                 if (Storage::exists($old_thumbnail_path)) {
                     Storage::move($old_thumbnail_path, $new_thumbnail_path);
                 }
-                
+
                 $tour->thumbnail = $new_thumbnail;
             }
-            
+
             $tour->slug = $new_slug;
             $tour->tour_url = "tours/{$new_slug}/index.htm";
         }

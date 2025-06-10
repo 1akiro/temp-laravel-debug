@@ -9,16 +9,21 @@ use App\Models\UserRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Routing\Controller;
 
 class UsersController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth')->except(['show']);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $query = $request->input('query');
-    
+
         if ($query) {
             $users = User::where('email', 'like', "%{$query}%")
                 ->orWhere('name', 'like', "%{$query}%")
@@ -27,7 +32,7 @@ class UsersController extends Controller
             $users = User::all();
         }
         return view('user.index', compact('users'));
-    } 
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -52,7 +57,7 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $query = $request->input('query');
-    
+
         $tourQuery = Tour::where('user_id', $user->id);
 
         if ($query) {
@@ -73,9 +78,9 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        $user = User::findOrFail($id); 
+        $user = User::findOrFail($id);
         $roles = UserRole::all();
-        
+
         return view('user.edit', compact('user', 'roles'));
     }
 
@@ -85,7 +90,7 @@ class UsersController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::findOrFail($id);
-        
+
         $rules = [
             'name' => 'required|string|max:255',
             'email' => [
@@ -95,24 +100,24 @@ class UsersController extends Controller
             ],
             'role_id' => 'required|exists:user_roles,id',
         ];
-        
+
         if ($request->filled('password')) {
             $rules['password'] = 'required|min:6|confirmed';
         }
-    
-        
+
+
         $validated = $request->validate($rules);
-        
+
         $user->name = $validated['name'];
         $user->email = $validated['email'];
         $user->role_id = $validated['role_id'];
-        
+
         if ($request->filled('password')) {
             $user->password = Hash::make($validated['password']);
         }
-        
+
         $user->save();
-        
+
         return redirect()->route('user.show', $user)->with('success', 'Lietotāja profils atjaunināts veiksmīgi.');
     }
 
@@ -121,15 +126,15 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);        
+        $user = User::findOrFail($id);
         $tours = Tour::where('user_id', $user->id)->get();
         foreach ($tours as $tour) {
             $tour->user_id = Auth::id();
             $tour->save();
         }
-        
+
         $user->delete();
-        
+
         return redirect()->route('user.index')->with('success', 'Lietotājs dzēsts veiksmīgi.');
     }
 
