@@ -28,4 +28,5 @@ Route::get('/dashboard', [AdminController::class, 'showDashboard'])->name('dashb
 
 Route::resource('user', UsersController::class);
 
+Route::get('/logs', [AdminController::class, 'activities'])->name('admin.activities');
 Route::get('/api/users/search', [UsersController::class, 'search'])->name('users.search');
