@@ -30,9 +30,11 @@
         <h1 class="mb-ma1 text-ma5 font-semibold">{{ $tour->title }}</h1>
         <div class="flex space-x-ma5">
             <h5 class="text-gray-500 font-semibold">{{ $tour->company_name }}</h5>
-            <a href="{{ route('user.show', $tour->user) }}">Publicēja: <strong class="text-dark">{{ $tour->user->name ?? 'Unknown'}}<strong/></a>
+            <a href="{{ route('user.show', $tour->user) }}">
+                Publicēja: <strong class="text-dark">{{ $tour->user->name ?? 'Unknown' }}</strong>
+            </a>
         </div>
-        <p class="">{{ $tour->description }}</p>
+        <p class="font-normal mt-ma3">{{ $tour->description }}</p>
     </div>
     <div class="flex flex-wrap items-center gap-ma3 bg-gray-100 rounded-lg p-4 mb-4 border border-gray-200">
         <a href="{{ route('tour.edit', $tour->id)}}" class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 mr-ma2  border-green-800 hover:border-green-700 rounded-xl">Rediģēt</a>

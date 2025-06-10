@@ -113,36 +113,53 @@ class ToursController extends Controller
             'title' => 'required|string|max:255',
             'company_name' => 'nullable|max:255',
             'description' => 'nullable|string',
-            'thumbnail' => 'required|image|max:2048',
-            'zip' => 'required|file|mimes:zip|max:500240',
-            'is_active' => 'boolean',
+            'thumbnail' => 'nullable|image|max:2048',
+            'zip' => 'nullable|file|mimes:zip|max:500240',
         ]);
 
+        // maina 'slug', ja virsraksts maināss
         if ($request->has('title') && $request->title !== $tour->title) {
-            $curr_slug = $tour->slug;
-            $slug = Str::slug($request->title);
-
-            if (Storage::exists("tours/{$tour->slug}")) {
-                Storage::move("tours/{$tour->slug}", "public/tours/{$slug}");
+            $old_slug = $tour->slug;
+            $new_slug = Str::slug($request->title);
+            
+            // atjaunina glabāšanas ceļu
+            
+            $storage_path = "public/tours/{$old_slug}";
+            $new_storage_path = "public/tours/{$new_slug}";
+            
+            if (Storage::exists($storage_path)) {
+                Storage::move($storage_path, $new_storage_path);
             }
-
-            $tour->slug = $slug;
-            $tour->tour_url = "tours/{$slug}/index.htm";
+            
+            // Atjaunina sīktēla faila ceļu
             if ($tour->thumbnail) {
-                $tour->thumbnail = str_replace("tours/{$curr_slug}", "tours/{$slug}", $tour->thumbnail);
+                $new_thumbnail = str_replace("thumbnail/{$old_slug}", "thumbnail/{$new_slug}", $tour->thumbnail);
+                $old_thumbnail_path = "public/" . $tour->thumbnail;
+                $new_thumbnail_path = "public/" . $new_thumbnail;
+                
+                if (Storage::exists($old_thumbnail_path)) {
+                    Storage::move($old_thumbnail_path, $new_thumbnail_path);
+                }
+                
+                $tour->thumbnail = $new_thumbnail;
             }
+            
+            $tour->slug = $new_slug;
+            $tour->tour_url = "tours/{$new_slug}/index.htm";
         }
 
+        // atjaunina sīktēlu
         if ($request->hasFile('thumbnail')) {
             if ($tour->thumbnail) {
-                Storage::delete($tour->thumbnail);
+                Storage::delete('public/' . $tour->thumbnail);
             }
             $thumbnail_path = $request->file('thumbnail')->store("thumbnail/{$tour->slug}", "public");
             $tour->thumbnail = $thumbnail_path;
         }
 
+        // atjaunina zip failu
         if ($request->hasFile('zip')) {
-            Storage::deleteDirectory("tours/{$tour->slug}");
+            Storage::deleteDirectory("public/tours/{$tour->slug}");
 
             $zip = new ZipArchive;
             $zip_path = $request->file('zip')->getRealPath();
@@ -152,15 +169,17 @@ class ToursController extends Controller
                 $zip->extractTo($extract_path);
                 $zip->close();
             } else {
-                return response()->json(['error' => 'Failed to extract zip file'], 500);
+                return back()->withErrors(['zip' => 'Failed to extract zip file']);
             }
-
-            $tour->tour_url = "tours/{$tour->slug}/index.htm";
         }
 
-        $tour->update($request->only(['title', 'description', 'company_name', 'is_active']));
+        // Atjaunina pārējos laukus
+        $tour->title = $request->title;
+        $tour->description = $request->description;
+        $tour->company_name = $request->company_name;
+        $tour->save();
 
-        return redirect()->route('tours.index')->with('success', 'Tour uploaded.');
+        return redirect()->route('tour.index')->with('success', 'Tour updated successfully.');
     }
 
     /**
