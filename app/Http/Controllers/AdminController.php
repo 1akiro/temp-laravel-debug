@@ -34,7 +34,7 @@ class AdminController extends Controller
             ->groupBy('date')
             ->orderBy('date')
             ->get();
-    
+
         $viewDates = $dailyViews->pluck('date');
         $viewCounts = $dailyViews->pluck('count');
 
@@ -47,11 +47,11 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.dashboard', compact(
-            'user', 
-            'totalViews', 
-            'viewsLast7Days', 
-            'viewsToday', 
-            'topTours', 
+            'user',
+            'totalViews',
+            'viewsLast7Days',
+            'viewsToday',
+            'topTours',
             'dailyViews',
             'viewDates',
             'viewCounts',
@@ -60,24 +60,24 @@ class AdminController extends Controller
     }
 
     public function activities()
-{
+    {
         $activities = Activity::select(
-        'activities.id',
-        'activities.created_at',
-        'users.name as user_name',
-        'tours.title as tour_title',
-        'activity_types.action as activity_action'
-    )
-    ->leftJoin('users', 'activities.user_id', '=', 'users.id')
-    ->leftJoin('tours', 'activities.tour_id', '=', 'tours.id')
-    ->leftJoin('activity_types', 'activities.activity_type_id', '=', 'activity_types.id')
-    ->latest('activities.created_at')
-    ->get();
+            'activities.id',
+            'activities.created_at',
+            'users.name as user_name',
+            'tours.title as tour_title',
+            'activity_types.action as activity_action'
+        )
+            ->leftJoin('users', 'activities.user_id', '=', 'users.id')
+            ->leftJoin('tours', 'activities.tour_id', '=', 'tours.id')
+            ->leftJoin('activity_types', 'activities.activity_type_id', '=', 'activity_types.id')
+            ->latest('activities.created_at')
+            ->get();
 
-    return view('admin.activities', [
-        'activities' => $activities,
-        'title' => 'Aktivitāšu žurnāls'
-    ]);
-}
+        return view('admin.activities', [
+            'activities' => $activities,
+            'title' => 'Aktivitāšu žurnāls'
+        ]);
+    }
 
 }
