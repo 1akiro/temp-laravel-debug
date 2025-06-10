@@ -17,7 +17,7 @@ class TourPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
@@ -25,13 +25,13 @@ class TourPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Tour $tour): bool
+    public function view(?User $user, Tour $tour): bool
     {
-        if($tour->is_active || $user->isManager() || $user->id === $tour->user_id) {
+        if ($tour->is_active) {
             return true;
         }
 
-        if($user->isManager() && $user->id === $tour->user_id) {
+        if ($user->isManager() && $user->id === $tour->user_id) {
             return true;
         }
 
