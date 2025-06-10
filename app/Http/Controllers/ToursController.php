@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tour;
 use App\Models\User;
+use App\Models\TourView;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -80,9 +81,17 @@ class ToursController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
         $tour = Tour::with('user')->findOrFail($id);
+
+        TourView::create([
+            'tour_id' => $tour->id,
+            'user_id' => Auth::check() ? Auth::id() : null,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'viewed_at' => now(),
+        ]);
         return view('tours.show', compact('tour'));
     }
 

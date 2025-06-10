@@ -22,6 +22,16 @@ class Tour extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function views()
+    {
+        return $this->hasMany(TourView::class);
+    }
+    
+    public function getViewCount()
+    {
+        return $this->views()->count();
+    }
+
     public function getSlug(): string
     {
         return 'slug';

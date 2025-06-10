@@ -56,7 +56,8 @@
             </div>
             {{ $slot }}
             <x-footer />
-
         </main>
+        @stack('scripts')
+
     </body>
 </html>
