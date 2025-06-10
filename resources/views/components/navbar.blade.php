@@ -42,8 +42,10 @@
             <a href="{{ route('home') }}">Sākumlapa</a>
             <a href="{{ route('tour.index')}}">Katalogs</a>
             <a href="#">Kontakti</a>
+            @can('before')
             <a href="{{ route('dashboard') }}">Informācijas panelis</a>
             <a href="{{ route('tour.create') }}">Pievienot tūri</a>
+            @endcan
             @auth
             <p>Pieslēdzies kā <strong>{{ $user->name ?? $user->username ?? $user->email }}</strong></p>
             @else

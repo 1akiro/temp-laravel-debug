@@ -58,7 +58,6 @@
                 @if($tour->thumbnail)
                     <div class="mb-2">
                         <img src="{{ Storage::url($tour->thumbnail) }}" alt="Current thumbnail" class="h-24">
-                        <p class="text-sm text-gray-500">Current thumbnail</p>
                     </div>
                 @endif
                 <input
@@ -75,6 +74,7 @@
                 />
             </div>
         </div>
+        @can('before', $tour)
         <div>
             <label class="block text-sm/6 font-medium text-gray-900" for="zip">Augšupielādēt failu</label>
             <div class="mt-ma1">
@@ -92,7 +92,7 @@
                 />
             </div>
         </div>
-        
+        @endcan
         <div class="flex justify-between">
             <button type="submit" class="bg-orange-500 hover:bg-orange-400 text-white
                 font-bold py-2 px-4 mt-ma2 border-b-4 border-orange-600

@@ -57,13 +57,13 @@ class User extends Authenticatable
     }
 
     public function isAdmin() {
-        return $this->role === 'Administrator';
+        return $this->role_id === 1;
     }
     public function isManager() {
-        return $this->role === 'Manager';
+        return $this->role_id === 2;
     }
     public function isRegularUser() {
-        return $this->role === 'User';
+        return $this->role_id === 3;
     }
 
 }

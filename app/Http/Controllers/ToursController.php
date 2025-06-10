@@ -29,8 +29,11 @@ class ToursController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->user() && $request->user()->cannot('create', Tour::class)) {
+            abort(403, 'You do not have permission to create a tour.');
+        }
         return view('tours.create');
     }
 
@@ -39,6 +42,9 @@ class ToursController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->cannot('create', Tour::class)) {
+            abort(403, 'You do not have permission to create a tour.');
+        }
         $request->validate([
             'title' => 'required|string|max:255',
             'company_name' => 'nullable|max:255',
@@ -89,6 +95,10 @@ class ToursController extends Controller
      */
     public function show(Request $request, string $id)
     {
+        $tour = Tour::findOrFail($id);
+        if (Auth::check() && Auth::user()->cannot('view', $tour)) {
+            abort(403, 'You do not have permission to view this tour.');
+        }
         $tour = Tour::with('user')->findOrFail($id);
 
         TourView::create([
@@ -106,6 +116,10 @@ class ToursController extends Controller
      */
     public function edit(string $id)
     {
+        if (Auth::user()->cannot('update', Tour::findOrFail($id))) {
+            abort(403, 'You do not have permission to edit this tour.');
+        }
+
         $tour = Tour::findOrFail($id);
         return view('tours.edit', compact('tour'));
     }
@@ -115,6 +129,9 @@ class ToursController extends Controller
      */
     public function update(Request $request, Tour $tour)
     {
+        if (Auth::user()->cannot('update', $tour)) {
+            abort(403, 'You do not have permission to update this tour.');
+        }
         $request->validate([
             'title' => 'required|string|max:255',
             'company_name' => 'nullable|max:255',
@@ -164,7 +181,7 @@ class ToursController extends Controller
         }
 
         // atjaunina zip failu
-        if ($request->hasFile('zip')) {
+        if ($request->hasFile('zip') && $request->Auth::user->isAdmin()) {
             Storage::deleteDirectory("public/tours/{$tour->slug}");
 
             $zip = new ZipArchive;
@@ -193,6 +210,9 @@ class ToursController extends Controller
      */
     public function destroy(Tour $tour)
     {
+        if (Auth::user()->cannot('delete', $tour)) {
+            abort(403, 'You do not have permission to delete this tour.');
+        }
 
         Storage::disk('public')->deleteDirectory("tours/{$tour->slug}");
         Storage::disk('public')->deleteDirectory("thumbnail/{$tour->slug}");
@@ -202,6 +222,10 @@ class ToursController extends Controller
 
     public function toggleVisibility(Request $request, Tour $tour)
     {
+        if ($request->user()->cannot('update', $tour)) {
+            abort(403, 'You do not have permission to change the visibility of this tour.');
+        }
+
         $tour->is_active = $request->has('is_active');
         $tour->save();
 
@@ -209,6 +233,10 @@ class ToursController extends Controller
     }
     public function changeOwner(Request $request, Tour $tour)
     {
+        if (!$request->user()->isAdmin()) {
+            abort(403, 'You do not have permission to change the owner of this tour.');
+        }
+
         $request->validate([
             'email' => 'required|email|exists:users,email'
         ]);

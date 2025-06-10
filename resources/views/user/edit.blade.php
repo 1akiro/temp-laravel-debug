@@ -82,6 +82,7 @@
                 />
             </div>
         </div>
+        @can('before')
         <div>
             <label class="block text-sm/6 font-medium text-gray-900" for="role_id">Lietotāja loma</label>
             <div class="mt-ma1">
@@ -105,7 +106,7 @@
                 @enderror
             </div>
         </div>
-
+        @endcan
         
         <div class="flex justify-between">
             <div>
@@ -120,6 +121,7 @@
         </div>
     </form>
 
+    @can('before')
     <div class="mt-8 pt-6 border-t border-gray-200">
         <h3 class="font-bold text-xl text-red-600">Dzēst lietotāju</h3>
         <p class="text-gray-600 my-2">Šī darbība pilnībā dzēsīs lietotāja kontu un ir neatgriezeniska.</p>
@@ -132,4 +134,5 @@
                 hover:border-red-600 rounded-xl">Dzēst lietotāju</button>
         </form>
     </div>
+    @endcan
 </x-layout>
