@@ -56,4 +56,14 @@ class User extends Authenticatable
         return $this->hasMany(Tour::class);
     }
 
+    public function isAdmin() {
+        return $this->role === 'Administrator';
+    }
+    public function isManager() {
+        return $this->role === 'Manager';
+    }
+    public function isRegularUser() {
+        return $this->role === 'User';
+    }
+
 }
