@@ -42,12 +42,13 @@
             <a href="{{ route('home') }}">Sākumlapa</a>
             <a href="{{ route('tour.index')}}">Katalogs</a>
             <a href="#">Kontakti</a>
-            @if($user->isAdmin())
-            <a href="{{ route('dashboard') }}">Informācijas panelis</a>
-            <a href="{{ route('tour.create') }}">Pievienot tūri</a>
-            @endif
             @auth
-            <p>Pieslēdzies kā <strong>{{ $user->name ?? $user->username ?? $user->email }}</strong></p>
+            @if($user->isAdmin())
+             <a href="{{ route('dashboard') }}">Informācijas panelis</a>
+            <a href="{{ route('tour.create') }}">Pievienot tūri</a>
+
+            @endif
+           <p>Pieslēdzies kā <strong>{{ $user->name ?? $user->username ?? $user->email }}</strong></p>
             @else
             <a class="hover:bg-green-700 hover:text-white text-dark font-bold py-2 px-4 border-2 border-green-700 hover:border-green-700 rounded-xl text-center" href="{{ route('show.register') }}">Reģistrēties</a>
             <a class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-xl shadow-md" href="{{ route('show.login') }}">Pieslēgties</a>

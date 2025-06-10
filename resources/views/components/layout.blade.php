@@ -9,9 +9,11 @@
     <body>
         <div class="top-0 z-[20]">
             <x-navbar/>
+            @auth
             @if($user->isAdmin())
             <x-admin-navbar />
             @endif
+            @endauth
         </div>
         <main class="min-h-screen max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {{ $slot }}
