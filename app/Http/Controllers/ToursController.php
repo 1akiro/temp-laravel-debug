@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tour;
+use App\Models\User;
+use App\Models\TourView;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -79,9 +81,17 @@ class ToursController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        $tour = Tour::findOrFail($id);
+        $tour = Tour::with('user')->findOrFail($id);
+
+        TourView::create([
+            'tour_id' => $tour->id,
+            'user_id' => Auth::check() ? Auth::id() : null,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'viewed_at' => now(),
+        ]);
         return view('tours.show', compact('tour'));
     }
 
@@ -163,5 +173,31 @@ class ToursController extends Controller
         Storage::disk('public')->deleteDirectory("thumbnail/{$tour->slug}");
         $tour->delete();
         return redirect()->route('tour.index')->with('success', 'Tour deleted successfully');
+    }
+
+    public function toggleVisibility(Request $request, Tour $tour)
+    {
+        $tour->is_active = $request->has('is_active');
+        $tour->save();
+
+        return redirect()->route('tour.show', $tour)->with('success', 'Tour visibility updated.');
+    }
+    public function changeOwner(Request $request, Tour $tour)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email'
+        ]);
+
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        $tour->user_id = $user->id;
+        $tour->save();
+
+        return response()->json([
+            'new_owner' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        ]);
     }
 }
