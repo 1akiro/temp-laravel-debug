@@ -1,15 +1,19 @@
 <x-layout>
     <x-slot name="title">
-        Reģistrēties
+        {{ __('auth.register_title') }}
     </x-slot>
     <div class="mt-li3 mb-li5 sm:mx-auto sm:w-full sm:max-w-sm">
         <form class="space-y-ma3" action="{{ route('register') }}" method="POST">
             @csrf
 
-            <h2 class="text-center font-bold text-2xl">Reģistrēties</h2>
+            <h2 class="text-center font-bold text-2xl">
+                {{ __('auth.register_title') }}
+            </h2>
 
             <div>
-                <label class="block text-sm/6 font-medium text-gray-900" for="name">Vārds Uzvārds</label>
+                <label class="block text-sm/6 font-medium text-gray-900" for="name">
+                    {{ __('user.name') }}
+                </label>
                 <div class="mt-ma1">
                     <input
                         class="block w-full rounded-md bg-white
@@ -28,7 +32,9 @@
                 </div>
             </div>
             <div>
-                <label class="block text-sm/6 font-medium text-gray-900" for="email">E-pasts</label>
+                <label class="block text-sm/6 font-medium text-gray-900" for="email">
+                    {{ __('user.email') }}
+                </label>
                 <div class="mt-ma1">
                     <input
                         class="block w-full rounded-md bg-white
@@ -48,7 +54,9 @@
             </div>
 
             <div>
-                <label class="block text-sm/6 font-medium text-gray-900" for="password">Parole</label>
+                <label class="block text-sm/6 font-medium text-gray-900" for="password">
+                    {{ __('user.password')  }}
+                </label>
                 <div class="mt-ma1">
                     <input
                         class="block w-full rounded-md bg-white
@@ -67,7 +75,9 @@
             </div>
 
             <div>
-                <label class="block text-sm/6 font-medium text-gray-900" for="password_confirmation">Apstiprināt paroli</label>
+                <label class="block text-sm/6 font-medium text-gray-900" for="password_confirmation">
+                    {{ __('user.confirm_password')}}
+                </label>
                 <div class="mt-ma1">
                     <input
                         class="block w-full rounded-md bg-white
@@ -87,7 +97,9 @@
             <div>
                 <button type="submit" class="bg-orange-500 hover:bg-orange-400 text-white
                     font-bold py-2 px-4 mt-ma2 border-b-4 border-orange-600
-                    hover:border-orange-500 rounded-xl w-full">Pieslēgties</button>
+                    hover:border-orange-500 rounded-xl w-full">
+                    {{ __('auth.register_title') }}
+                </button>
 
             </div>
         </form>

@@ -12,7 +12,14 @@
     "general.view": "Skatīt",
     "general.yes": "Jā",
     "general.no": "Nē",
-        
+    "general.vr": "Virtuālās tūres",
+
+    "call.view_catalog" : "Izpētīt Katalogu",
+    "call.contact_us" : "Sazinies ar mums",
+
+    "text.short_desc": "Augstas kvalitātes 360° tūres dažādiem mērķiem.",
+    "text.long_desc": "Mēs veidojam augstas kvalitātes 360° virtuālās tūres, kas ļauj iepazīt vidi attālināti – reālistiski un interaktīvi. Ideāli piemērots nekustamajiem īpašumiem, uzņēmumiem un publiskām telpām, kas vēlas izcelties digitālajā vidē. ",
+
     "navigation.home": "Sākumlapa",
     "navigation.catalog": "Katalogs",
     "navigation.contacts": "Kontakti",
@@ -21,13 +28,15 @@
     "navigation.register": "Reģistrēties",
     "navigation.login": "Pieslēgties",
     "navigation.logout": "Atslēgties",
-    
+
     "admin.activity_log": "Aktivitāšu žurnāls",
     "admin.admin_panel": "Administrācijas panelis",
     "admin.tickets": "Biļetes",
     "admin.communication": "Saziņa",
     "admin.no_activities": "Nav nevienas aktivitātes.",
-    
+    "admin.submission": "Pieteikumi",
+
+
     "tour.title": "Tūres nosaukums",
     "tour.company_name": "Uzņēmuma nosaukums",
     "tour.description": "Apraksts",
@@ -52,7 +61,7 @@
     "tour.owner_changed": "Īpašnieks nomainīts uz {name} ({email})",
     "tour.delete_confirmation": "Vai tiešām vēlaties dzēst šo tūri?",
     "tour.no_tours": "Nav pieejamu tūru.",
-    
+
     "user.name": "Vārds Uzvārds",
     "user.email": "E-pasta adrese",
     "user.password": "Parole",
@@ -68,21 +77,21 @@
     "user.search_tours": "Meklēt tūres...",
     "user.search_users": "Meklēt lietotājus...",
     "user.clear": "Notīrīt",
-    
+
     "auth.login_title": "Pieslēgties",
     "auth.register_title": "Reģistrēties",
     "auth.remember_me": "Atcerēties mani",
     "auth.forgot_password": "Aizmirsi paroli?",
     "auth.already_registered": "Jau reģistrējies?",
     "auth.not_registered": "Vēl nav reģistrējies?",
-    
+
     "validation.required": "Lauks {attribute} ir obligāts.",
     "validation.email": "Laukā {attribute} jābūt derīgai e-pasta adresei.",
     "validation.min": "Lauka {attribute} garumam jābūt vismaz {min} simboli.",
-    
+
     "footer.follow_us": "Seko mums",
     "footer.all_rights_reserved": "Visas tiesības aizsargātas.",
-    
+
     "(and :count more error)": "(un vēl :count kļūdas)",
     "(and :count more errors)": "(un vēl :count kļūdas)|(un vēl :count kļūdas)|(un vēl :count kļūdas)",
     "A decryption key is required.": "Nepieciešama atšifrēšanas atslēga.",

@@ -5,20 +5,19 @@
 
       <div class="lg:w-1/2 w-full text-center lg:text-left">
         <h2 class="text-4xl font-extrabold text-dark leading-tight">
-          <span class="text-green-700">360&deg;</span> Virtuālās Tūres
+          <span class="text-green-700">360&deg;</span> {{ __('general.vr') }}
         </h2>
         <p class="mt-4 text-gray-700 text-base lg:text-lg">
-          Mēs veidojam augstas kvalitātes 360° virtuālās tūres, kas ļauj iepazīt vidi attālināti – reālistiski un interaktīvi.
-          Ideāli piemērots nekustamajiem īpašumiem, uzņēmumiem un publiskām telpām, kas vēlas izcelties digitālajā vidē.
+            {{ __('text.long_desc')}}
         </p>
         <div class="flex flex-col sm:flex-row lg:justify-start justify-center gap-4 mt-6">
           <a href="#"
              class="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-md">
-            Izpētīt Katalogu
+            {{ __('call.view_catalog') }}
           </a>
           <a href="#"
              class="bg-orange-500 hover:bg-orange-400 text-white font-bold py-2 px-6 rounded-lg shadow-md">
-            Sazinies ar mums
+            {{ __('call.contact_us') }}
           </a>
         </div>
       </div>

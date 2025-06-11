@@ -2,8 +2,10 @@
     <!-- Desktop Navbar -->
     <div class="flex justify-between items-center w-full">
         <div class="flex space-x-ma5 text-ma4 font-semibold text-white">
-            <a href="{{ route('dashboard') }}">Informācijas panelis</a>
-            <a href="{{ route('tour.create') }}">Pievienot tūri</a>
+            <a href="{{ route('dashboard') }}">{{ __('navigation.dashboard') }}</a>
+            <a href="{{ route('tour.create') }}">
+                {{ __('tour.publish_tour')  }}
+            </a>
         </div>
     </div>
 </nav>

@@ -4,19 +4,25 @@
         <li class="mb-ma1">
             <a href="{{ route('dashboard') }}" class="flex font-semibold items-center py-2 px-4 text-gray-100 hover:bg-green-700 hover:text-white rounded-md">
                 <i class="ri-home-2-line mr-3 text-lg"></i>
-                <span class="text-sm">Informācijas panelis</span>
+                <span class="text-sm">
+                    {{ __('navigation.dashboard') }}
+                </span>
             </a>
         </li>
         <li class="mb-ma1">
             <a href="{{ route('user.index') }}" class="flex font-semibold items-center py-2 px-4 text-gray-100 hover:bg-green-700 hover:text-white rounded-md">
                 <i class="ri-home-2-line mr-3 text-lg"></i>
-                <span class="text-sm">Lietotāji</span>
+                <span class="text-sm">
+                    {{ __('navigation.users')}}
+                </span>
             </a>
         </li>
         <li class="mb-ma1">
             <a href="{{ route('admin.activities') }}" class="flex font-semibold items-center py-2 px-4 text-gray-100 hover:bg-green-700 hover:text-white rounded-md">
                 <i class="ri-home-2-line mr-3 text-lg"></i>
-                <span class="text-sm">Aktivitāšu Žurnāls</span>
+                <span class="text-sm">
+                    {{ __('admin.activity_log') }}
+                </span>
             </a>
         </li>
     </ul>

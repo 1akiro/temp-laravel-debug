@@ -2,7 +2,7 @@
     <!-- Desktop Navbar -->
     <div class="hidden lg:flex justify-between items-center w-full">
         <div class="text-ma5 text-green-700 font-bold">
-            Virtuālās tūres
+            {{ __('general.vr')}}
         </div>
         <div class="flex space-x-ma5 text-ma4 font-semibold text-dark">
             <a href="{{ route('home') }}">{{ __('navigation.home') }}</a>

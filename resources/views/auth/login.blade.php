@@ -1,14 +1,16 @@
 <x-layout>
     <x-slot name="title">
-        Pieslēgties
+        {{ __('auth.login_title') }}
     </x-slot>
     <div class="mt-li3 mb-li5 sm:mx-auto sm:w-full sm:max-w-sm">
 
         <form class="space-y-ma3" action="{{ route('login') }}" method="POST">
             @csrf
-            <h2 class="text-center font-bold text-2xl">Pieslēgties</h2>
+            <h2 class="text-center font-bold text-2xl">
+                {{ __('auth.login_title')}}
+            </h2>
             <div>
-                <label class="block text-sm/6 font-medium text-gray-900" for="email">E-pasts</label>
+                <label class="block text-sm/6 font-medium text-gray-900" for="email">{{ __('user.email')}}</label>
                 <div class="mt-ma1">
                     <input
                         class="block w-full rounded-md bg-white
@@ -25,7 +27,7 @@
                 </div>
             </div>
             <div>
-                <label for="password" class="block text-sm/6 font-medium text-gray-900">Parole</label>
+                <label for="password" class="block text-sm/6 font-medium text-gray-900">{{ __('user.password') }}</label>
                 <div class="mt-ma1">
                     <input
                         class="block w-full rounded-md bg-white
@@ -44,7 +46,8 @@
             <div>
                 <button type="submit" class="bg-orange-500 hover:bg-orange-400 text-white
                     font-bold py-2 px-4 mt-ma2 border-b-4 border-orange-600
-                    hover:border-orange-500 rounded-xl w-full">Pieslēgties
+                    hover:border-orange-500 rounded-xl w-full">
+                    {{ __('auth.login_title') }}
                 </button>
             </div>
         </form>

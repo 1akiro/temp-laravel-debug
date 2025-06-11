@@ -4,21 +4,35 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-ma6 text-sm mb-li2">
 
                 <div>
-                    <h5 class="text-lg font-semibold mb-2">Virtuālās tūres</h5>
-                    <p class="text-[#4B4B4B]">Augstas kvalitātes 360° tūres dažādiem mērķiem.</p>
+                    <h5 class="text-lg font-semibold mb-2">
+                        {{ __('general.vr') }}
+                    </h5>
+                    <p class="text-[#4B4B4B]">
+                        {{ __('text.short_desc') }}
+                    </p>
                 </div>
 
                 <div>
-                    <h5 class="text-lg font-semibold mb-2">Saites</h5>
+                    <h5 class="text-lg font-semibold mb-2">
+                        {{ __('general.view') }}
+                    </h5>
                     <ul class="space-y-2">
-                        <li><a href="#" class="hover:underline">Sākumlapa</a></li>
-                        <li><a href="#" class="hover:underline">Katalogs</a></li>
-                        <li><a href="#" class="hover:underline">Kontakti</a></li>
+                        <li><a href="{{ route('home')}}" class="hover:underline">
+                            {{ __('navigation.home') }}
+                        </a></li>
+                        <li><a href="{{ route('tour.index')}}" class="hover:underline">
+                            {{ __('navigation.catalog') }}
+                        </a></li>
+                        <li><a href="#" class="hover:underline">
+                            {{ __('navigation.contacts') }}
+                        </a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h5 class="text-lg font-semibold mb-2">Seko mums</h5>
+                    <h5 class="text-lg font-semibold mb-2">
+                        {{ __('footer.follow_us')}}
+                    </h5>
                     <div class="flex justify-center space-x-6 mt-3">
                         <a href="#" class="hover:text-[#2F4B35]" aria-label="Facebook">
                             <svg class="h-5 w-5 fill-current text-[#2A2A2A]" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +59,7 @@
             </div>
 
             <p class="text-xs text-[#555] font-light font-mono">
-                &copy; {{ date('Y') }} Virtuālās tūres.
+                &copy; {{ __('footer.all_rights_reserved')}} {{ date('Y') }} {{ __('general.vr') }}.
             </p>
         </div>
     </footer>
