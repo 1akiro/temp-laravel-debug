@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('topic_id')->constrained('ticket_topic')->onDelete('cascade');
-            $table->text('message');
-            $table->timestamps();
-        });
+            Schema::create('tickets', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('user_id')->constrained()->onDelete('cascade');
+                $table->foreignId('topic_id')->constrained('ticket_topics')->onDelete('cascade');
+                $table->text('message');
+                $table->timestamps();
+            });
     }
 
     /**
